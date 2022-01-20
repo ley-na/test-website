@@ -11,8 +11,8 @@ menuToggle.addEventListener("click", changeMenuState);
 navLinks.forEach(link => link.addEventListener("click", changeMenuState));
 
 function changeMenuState() {
-  menuToggle.classList.toggle("active");
-  navMenu.classList.toggle("active");
+  menuToggle.classList.toggle("is-open");
+  navMenu.classList.toggle("is-open");
 }
 
 cardButtons.forEach(button => button.addEventListener("click", () => {
