@@ -6,6 +6,8 @@ const sidebarLinks = document.querySelectorAll(".sidebar__link");
 const articles = document.querySelectorAll(".article");
 const sections = document.querySelectorAll(".js-section");
 
+const delta = 20;
+
 menuToggle.addEventListener("click", changeMenuState);
 
 navLinks.forEach(link => link.addEventListener("click", changeMenuState));
@@ -20,56 +22,28 @@ cardButtons.forEach(button => button.addEventListener("click", () => {
   card.classList.toggle("flipped");
 }));
 
-function updateSidebarLinks() {
-  if (sidebarLinks.length === 0 || articles.length === 0) {
-    return;
-  }
-
-  sidebarLinks.forEach((link) => {
-    link.classList.remove("active");
-  });
-
-  let prevY = 0;
-
-  for (let i = 0; i < articles.length; i++) {
-    const article = articles[i];
-    const curY = article.offsetTop + article.offsetHeight;
-
-    if (prevY <= scrollY && scrollY <= curY) {
-      const link = sidebarLinks[i];
-
-      link.classList.add("active");
-
-      const urlHash = "/docs/" + link.getAttribute("href").replace("#", "");
-      //window.history.pushState(null, "", urlHash);
-
-      // required link was found and updated, exit
-      break;
-    }
-
-    // link was not found, update position for the next iteration
-    prevY = curY;
-  }
-}
-
-function updateTopLinks() {
-  if (navLinks.length === 0 || sections.length === 0) {
+function updateLinks(links, sections, updateUrl) {
+  if (links.length === 0 || sections.length === 0) {
     return;
   }
   
-  navLinks.forEach((link) => {
+  // deactivate all links
+  links.forEach((link) => {
     link.classList.remove("active");
   });
 
-  let prevY = 0;
-
   for (let i = 0; i < sections.length; i++) {
     const section = sections[i];
-    const curY = section.offsetTop + section.offsetHeight;
+    const curY = section.offsetTop + section.offsetHeight - delta;
 
-    if (prevY <= scrollY && scrollY < curY) {
-      const link = navLinks[i];
+    if (window.scrollY <= curY) {
+      const link = links[i];
       link.classList.add("active");
+      if (updateUrl) {
+        const urlHash = "/docs/" + link.getAttribute("href").replace("#", "");
+        window.history.pushState(null, "", urlHash);
+      }
+
       // required link was found and updated, exit
       break;
     }
@@ -77,6 +51,6 @@ function updateTopLinks() {
 }
 
 window.addEventListener("scroll", () => {
-  updateSidebarLinks();
-  updateTopLinks();
+  updateLinks(navLinks, sections, false);
+  updateLinks(sidebarLinks, articles, true);
 });
