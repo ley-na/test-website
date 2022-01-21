@@ -358,13 +358,16 @@ img {
   font-size: 1.2rem;
 }
 
-.card__cta-container::-webkit-scrollbar {
+.card__cta-container::-webkit-scrollbar,
+.card__list::-webkit-scrollbar {
 	width: 5px;
 }
-.card__cta-container::-webkit-scrollbar-track {
+.card__cta-container::-webkit-scrollbar-track,
+.card__list::-webkit-scrollbar-track {
 	background: #f1f1f1;
 }
-.card__cta-container::-webkit-scrollbar-thumb {
+.card__cta-container::-webkit-scrollbar-thumb,
+.card__list::-webkit-scrollbar-thumb {
 	background: var(--color-primary);
 }
 
@@ -399,6 +402,25 @@ img {
 .card__cta-btn:hover {
   background-color: var(--color-primary-dark);
   transition: all 0.6s ease-in;
+}
+
+@media (max-width: 530px) {
+  .card__side--front {
+    position: relative;
+  }
+  
+  .card__side--back {
+    position: relative;
+    transform: none;
+  }
+
+  .card__cta-btn--back {
+    display: none;
+  }
+
+  .flipped {
+    transform: none;
+  }
 }
 
 /* FOOTER */
@@ -472,4 +494,3 @@ img {
     margin-bottom: 1rem;
   }
 }
-
