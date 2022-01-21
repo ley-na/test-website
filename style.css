@@ -477,12 +477,6 @@ img {
   margin-bottom: 2rem;
 }
 
-@media (max-width: 810px) {
-  .sidebar {
-    min-width: 15%;
-  }
-}
-
 @media (max-width: 700px) {
   .sidebar__link {
     font-size: 1rem;
